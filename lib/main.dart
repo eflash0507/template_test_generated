@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
         locale: localizationDelegate.currentLocale,
         scrollBehavior: const CupertinoScrollBehavior(),
         debugShowCheckedModeBanner: Config.showDebugBanner,
-        title: "Efresh CAS",
+        title: "toto_Efresh CAS",
         home: const MyHomePage(title: '[DEV]Flutter Demo Home Page'),
       ),
     );
