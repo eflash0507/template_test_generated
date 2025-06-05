@@ -1,0 +1,13 @@
+{
+	"app_bar": 
+	{
+		"title": "[PROD]Menu",
+		"home": "[PROD]Accueil",
+		"about": "[PROD]À propos",
+		"contact": "[PROD]Contact",
+		"news": "[PROD]Marché",
+		"research": "[PROD]Solution",
+		"ecom": "[PROD]Boutique",
+		"devices": "[PROD]Equipements"
+	}
+}
