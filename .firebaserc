@@ -1,0 +1,7 @@
+﻿{
+  "projects": {
+    "dev":     "template-test-dev",
+    "staging": "template-test-staging",
+    "prod":    "template-test-prod-d8d6b"
+  }
+}
