@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
         scrollBehavior: const CupertinoScrollBehavior(),
         debugShowCheckedModeBanner: Config.showDebugBanner,
         title: "toto_Efresh CAS",
-        home: const MyHomePage(title: '[DEV]Flutter Demo Home Page'),
+        home: const MyHomePage(title: 'Flutter Demo Home Page'),
       ),
     );
   }
