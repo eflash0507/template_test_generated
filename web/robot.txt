@@ -1,0 +1,11 @@
+# robots.txt pour Flutter Web multilangue & full SEO
+
+User-agent: *
+Allow: /
+
+# Pointage vers le sitemap
+Sitemap: https://template-test-prod-d8d6b.web.app/sitemap.xml
+
+# (Optionnel) Exemples de blocages :
+# Disallow: /private/
+# Disallow: /?filter=

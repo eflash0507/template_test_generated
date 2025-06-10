@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/widgets.dart';
 import 'package:seo/seo.dart';
 
@@ -19,21 +20,38 @@ class SeoHead extends StatelessWidget {
 /// SeoText : génère une balise <p> ou <h1>, puis affiche `child`.
 class SeoText extends StatelessWidget {
   final String text;
-  final TextTagStyle style;
-  final Widget child;
+  final TextTagStyle? tagStyle;
+  final RichText? textSpan;
+  final TextStyle? style;
+  final TextAlign? textAlign;
+  final int? maxLines;
+  final TextOverflow? overflow;
+
   const SeoText({
-    required this.text,
-    this.style = TextTagStyle.p,
-    required this.child,
     super.key,
+    required this.text,
+    this.tagStyle,
+    this.textSpan,
+    this.style,
+    this.textAlign,
+    this.maxLines,
+    this.overflow
   });
 
   @override
   Widget build(BuildContext context) {
     return Seo.text(
       text: text,
-      style: style,
-      child: child,
+      style: tagStyle ?? TextTagStyle.p,
+      child: textSpan != null
+          ?textSpan!
+          :AutoSizeText(
+        text,
+        style: style,
+        textAlign: textAlign??TextAlign.center,
+        maxLines: maxLines,
+        overflow: overflow??TextOverflow.ellipsis,
+      ),
     );
   }
 }

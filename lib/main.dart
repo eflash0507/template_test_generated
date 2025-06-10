@@ -6,6 +6,7 @@ import 'package:seo/head_tag.dart';
 import 'package:seo/html/seo_controller.dart';
 import 'package:seo/html/seo_widget.dart';
 import 'package:seo/html/tree/widget_tree.dart';
+import 'package:seo/seo.dart';
 import 'package:template_test_generated/src/config.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:template_test_generated/src/variables.dart';
@@ -57,21 +58,21 @@ class MyApp extends StatelessWidget {
 
           // 2. Titre et description
           MetaTag(name: 'title',       content: appTitleForCtrSERP),
-          MetaTag(name: 'description', content: description),
+          MetaTag(name: 'description', content: metaDescription),
 
           // 3. Canonical & hreflang
-          MetaTag(name: 'description', content: mainPageMetaTag),
           LinkTag(rel: 'canonical', href: mainPageLinkTagCanonical),
           LinkTag(rel: 'alternate', hreflang: 'en', href: mainPageLinkTagAlternateFR),
           LinkTag(rel: 'alternate', hreflang: 'fr', href: mainPageLinkTagAlternateEN),
           LinkTag(rel: 'alternate', hreflang: 'x-default', href: mainPageLinkTagAlternateDefault),
+          /**
           // 4. Open Graph NOT WORKING NEED SERVERLESS
           MetaTag(name: 'og:type',        content: 'website'),
           MetaTag(name: 'og:title',       content: appTitleForCtrSERP),
-          MetaTag(name: 'og:description', content: description),
+          MetaTag(name: 'og:description', content: metaDescription),
           MetaTag(name: 'og:url',         content: ogUrl),
           MetaTag(name: 'og:image',       content: ogImg),
-          /**
+
           // 5. Twitter Cards NOT WORKING NEED SERVERLESS
           MetaTag(name: 'twitter:card',        content: 'summary_large_image'),
           MetaTag(name: 'twitter:title',       content: titre),
@@ -81,7 +82,7 @@ class MyApp extends StatelessWidget {
         ],
         child: Seo.html(/// JSON-LD Organization
           html: '''
-            <title>$appTitleForCtrSERP | MonSite</title>
+            <title>$appTitleForCtrSERP</title>
             <script type="application/ld+json">
             {
               "@context":"https://schema.org",
@@ -193,7 +194,42 @@ class _MyHomePageState extends State<MyHomePage> {
           // wireframe for each widget.
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(translate('seo_test.description'),),
+            // H1
+            SeoText(
+              text: 'Template Flutter Web Multilingue & Full SEO',
+              textAlign: TextAlign.center,
+              maxLines: 2,
+              tagStyle: TextTagStyle.h1,
+            ),
+            // H2
+            SeoText(
+              text: 'Fonctionnalités Clés',
+              tagStyle: TextTagStyle.h2,
+            ),
+
+            // H3
+            SeoText(
+              text: 'Internationalisation & i18n',
+              tagStyle: TextTagStyle.h3,
+            ),
+
+            // H4
+            SeoText(
+              text: 'Optimisation SEO Dynamique',
+              tagStyle: TextTagStyle.h4,
+            ),
+
+            // H5
+            SeoText(
+              text: 'PWA & Déploiement Firebase',
+              tagStyle: TextTagStyle.h5,
+            ),
+
+            // H6
+            SeoText(
+              text: 'A Propos de ce Template',
+              tagStyle: TextTagStyle.h6,
+            ),
 
           ],
         ),
