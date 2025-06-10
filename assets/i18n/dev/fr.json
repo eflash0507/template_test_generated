@@ -1,4 +1,10 @@
 {
+	"seo_test": {
+		"lang": "FRENCH",
+		"appTitleForCtrSERP": "FRENCH",
+		"description": "DESC FRENCH"
+	},
+
 	"app_bar": 
 	{
 		"title": "[DEV]Menu",

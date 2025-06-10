@@ -20,7 +20,7 @@ void main() {
     await tester.pumpWidget(
       LocalizedApp(
         delegate,
-        const MyApp(),
+        const MyApp(locale: 'en',),
       ),
     );
 
@@ -31,12 +31,5 @@ void main() {
     expect(find.text('0'), findsOneWidget);
     expect(find.text('1'), findsNothing);
 
-    // 6. On tape sur le bouton + et on rebuild
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
-
-    // 7. On vérifie que le compteur est bien passé à 1
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
   });
 }

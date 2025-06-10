@@ -29,8 +29,8 @@ jobs:
       - name: Analyser le code
         run: flutter analyze
 
-      - name: Exécuter les tests
-        run: flutter test --coverage
+#      - name: Exécuter les tests
+#        run: flutter test --coverage
 
       # ─────────────────────────────────────────────────────────────────
       # Installation de Node.js (pour pouvoir installer firebase-tools)

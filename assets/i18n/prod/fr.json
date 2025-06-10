@@ -1,7 +1,13 @@
 {
+	"seo_test": {
+		"lang": "FRENCH",
+		"appTitleForCtrSERP": "FRENCH",
+		"description": "DESC FRENCH"
+	},
+
 	"app_bar": 
 	{
-		"title": "[PROD]Menu",
+		"title": "[PROD]MenuFR",
 		"home": "[PROD]Accueil",
 		"about": "[PROD]À propos",
 		"contact": "[PROD]Contact",

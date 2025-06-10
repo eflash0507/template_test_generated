@@ -1,4 +1,10 @@
 {
+	"seo_test": {
+		"lang": "ENGLISH",
+		"appTitleForCtrSERP": "ENGLISH",
+		"description": "DESC ENGLISH"
+	},
+
 	"app_bar": 
 	{
 		"title": "[DEV]Menu",

@@ -1,10 +1,27 @@
 // lib/src/config.dart
+import 'dart:ui';
+
+import 'package:flutter/material.dart';
+
 const String _env = String.fromEnvironment('ENV', defaultValue: 'prod');
 
 class Config {
   static bool get isDev     => _env == 'dev';
   static bool get isStaging => _env == 'staging';
   static bool get isProd    => _env == 'prod';
+
+  /// Banner label
+  static String get bannerLabel {
+    if (isDev) return 'DEV';
+    if (isStaging) return 'STAGING';
+    return 'PROD';
+  }
+
+  static Color get bannerColor {
+    if (isDev) return Colors.green;
+    if (isStaging) return Colors.orange;
+    return Colors.red;
+  }
 
   // --- 1) Chemins i18n ---
   // Permet à flutter_translate de charger les bons JSON selon ENV

@@ -1,7 +1,13 @@
 {
+	"seo_test": {
+		"lang": "ENGLISH",
+		"appTitleForCtrSERP": "ENGLISH",
+		"description": "DESC ENGLISH"
+	},
+
 	"app_bar": 
 	{
-		"title": "[PROD]Menu",
+		"title": "[PROD]MenuENG",
 		"home": "[PROD]Accueil",
 		"about": "[PROD]À propos",
 		"contact": "[PROD]Contact",

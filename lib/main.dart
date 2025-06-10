@@ -1,49 +1,135 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_web_plugins/flutter_web_plugins.dart';
+import 'package:seo/head_tag.dart';
+import 'package:seo/html/seo_controller.dart';
+import 'package:seo/html/seo_widget.dart';
+import 'package:seo/html/tree/widget_tree.dart';
 import 'package:template_test_generated/src/config.dart';
 import 'package:flutter_translate/flutter_translate.dart';
+import 'package:template_test_generated/src/variables.dart';
+import 'package:template_test_generated/widgets/seo_helpers.dart';
+import 'package:web/web.dart' as web;
+
+String detectLocale() {
+  // Récupère la langue depuis l'API navigateur interop
+  final String navLang = web.window.navigator.language;
+  final String code = navLang.split('-').first.toLowerCase();
+
+  // Définit les locales supportées
+  const supported = ['en', 'fr'];
+  return supported.contains(code) ? code : 'en';
+}
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  String basePath = Config.i18nBasePath;
+  // récupère la langue passée via --dart-define=LOCALE
+  /// const String localeEnv = String.fromEnvironment('LOCALE', defaultValue: 'en');
+  final localeEnv = detectLocale();
+  print("env local langue IS >>> $localeEnv");
   var delegate = await LocalizationDelegate.create(
     fallbackLocale: 'en',
     supportedLocales: ['en', 'fr'],
-    basePath: basePath,  // <- ici, on passe Config.i18nBasePath
+    basePath: Config.i18nBasePath,  // <- ici, on passe Config.i18nBasePath
   );
-  runApp(LocalizedApp(delegate, MyApp()));
+  usePathUrlStrategy();  // permet à Google de voir chaque route comme une page distincte
+  runApp(LocalizedApp(delegate, MyApp(locale: localeEnv)));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final String locale;
+  const MyApp({Key? key, required this.locale}) : super(key: key);
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     var localizationDelegate = LocalizedApp.of(context).delegate;
-    return LocalizationProvider(
-      state: LocalizationProvider.of(context).state,
-      child: MaterialApp(
-        localizationsDelegates: [
-          GlobalMaterialLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          localizationDelegate,
+    return SeoController(
+      enabled: true,                                 // désactivez si user loggé, testé, etc.
+      tree: WidgetTree(context: context),            // parcours du widget tree
+      child:SeoHead(
+        tags: [
+          // 1. Métadatas HTML de base
+          MetaTag(name: 'charset',  content: 'UTF-8'),
+          MetaTag(name: 'viewport', content: 'width=device-width, initial-scale=1'),
+          MetaTag(name: 'robots',   content: 'index, follow'),
+
+          // 2. Titre et description
+          MetaTag(name: 'title',       content: appTitleForCtrSERP),
+          MetaTag(name: 'description', content: description),
+
+          // 3. Canonical & hreflang
+          MetaTag(name: 'description', content: mainPageMetaTag),
+          LinkTag(rel: 'canonical', href: mainPageLinkTagCanonical),
+          LinkTag(rel: 'alternate', hreflang: 'en', href: mainPageLinkTagAlternateFR),
+          LinkTag(rel: 'alternate', hreflang: 'fr', href: mainPageLinkTagAlternateEN),
+          LinkTag(rel: 'alternate', hreflang: 'x-default', href: mainPageLinkTagAlternateDefault),
+          // 4. Open Graph NOT WORKING NEED SERVERLESS
+          MetaTag(name: 'og:type',        content: 'website'),
+          MetaTag(name: 'og:title',       content: appTitleForCtrSERP),
+          MetaTag(name: 'og:description', content: description),
+          MetaTag(name: 'og:url',         content: ogUrl),
+          MetaTag(name: 'og:image',       content: ogImg),
+          /**
+          // 5. Twitter Cards NOT WORKING NEED SERVERLESS
+          MetaTag(name: 'twitter:card',        content: 'summary_large_image'),
+          MetaTag(name: 'twitter:title',       content: titre),
+          MetaTag(name: 'twitter:description', content: description),
+          MetaTag(name: 'twitter:image',       content: imageUrl),
+          **/
         ],
-        supportedLocales: localizationDelegate.supportedLocales,
-        locale: localizationDelegate.currentLocale,
-        scrollBehavior: const CupertinoScrollBehavior(),
-        debugShowCheckedModeBanner: Config.showDebugBanner,
-        title: "toto_Efresh CAS",
-        home: const MyHomePage(title: 'Flutter Demo Home Page'),
+        child: Seo.html(/// JSON-LD Organization
+          html: '''
+            <title>$appTitleForCtrSERP | MonSite</title>
+            <script type="application/ld+json">
+            {
+              "@context":"https://schema.org",
+              "@type":"Organization",
+              "url":"$mainPageLinkTagAlternateDefault",
+              "name":"$appTitleForCtrSERP",
+              "sameAs":[
+                "$youtubeLink",
+                "$instagram",
+                "$tiktok"
+              ]
+            }
+            </script>
+            ''',
+          child: MaterialApp(
+              localizationsDelegates: [
+                GlobalMaterialLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+                localizationDelegate,
+              ],
+
+              supportedLocales: localizationDelegate.supportedLocales,
+              locale: localizationDelegate.currentLocale,
+              scrollBehavior: const CupertinoScrollBehavior(),
+              debugShowCheckedModeBanner: false,
+              initialRoute: "/$locale",
+              routes: {
+                '/en': (_) => MyHomePage(),
+                '/fr': (_) => MyHomePage(),
+                '/': (_) => MyHomePage(),
+              },
+              title: translate('seo_test.appTitleForCtrSERP')
+          ),
+        ),
+
+
+
       ),
+
+
+
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+  const MyHomePage({super.key, this.title});
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
@@ -54,25 +140,13 @@ class MyHomePage extends StatefulWidget {
   // used by the build method of the State. Fields in a Widget subclass are
   // always marked "final".
 
-  final String title;
+  final String? title;
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -84,13 +158,21 @@ class _MyHomePageState extends State<MyHomePage> {
     // than having to individually change instances of widgets.
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         // TRY THIS: Try changing the color here to a specific color (to
         // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
         // change color while the other colors stay the same.
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+        title: Text(translate('seo_test.appTitleForCtrSERP')),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.ac_unit),
+            onPressed: () => _onActionSheetPress(context),
+            tooltip: translate('button.change_language'),
+          ),
+        ],
       ),
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
@@ -111,19 +193,54 @@ class _MyHomePageState extends State<MyHomePage> {
           // wireframe for each widget.
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(translate("app_bar.title"),),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
+            Text(translate('seo_test.description'),),
+
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment HOTFIX',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+    );
+  }
+
+  void showDemoActionSheet(
+      {required BuildContext context, required Widget child}) {
+    showCupertinoModalPopup<String>(
+        context: context,
+        builder: (BuildContext context) => child).then((String? value) {
+      if (value != null) changeLocale(context, value);
+    });
+  }
+
+  void _onActionSheetPress(BuildContext context) {
+    showDemoActionSheet(
+        context: context,
+        child: Container(
+          color: Colors.transparent,/// Theme.of(context).textTheme.titleLarge?.color,
+          child: CupertinoActionSheet(
+            title: Text(translate('language.selection.title'),style: TextStyle(color: Theme.of(context).textTheme.titleLarge?.color,),),
+            message: Text(translate('language.selection.message'),style: TextStyle(color: Theme.of(context).textTheme.titleLarge?.color,),),
+            actions: <Widget>[
+              Container(
+                color: Theme.of(context).textTheme.titleLarge?.color,
+                child:CupertinoActionSheetAction(
+                  child: Text(translate('language.name.en')),
+                  onPressed: () => Navigator.pop(context, 'en_US'),
+                ),
+              ),
+              Container(
+                color: Theme.of(context).textTheme.titleLarge?.color,
+                child:CupertinoActionSheetAction(
+                  child: Text(translate('language.name.fr')),
+                  onPressed: () => Navigator.pop(context, 'fr_FR'),
+                ),
+              )
+            ],
+            cancelButton: CupertinoActionSheetAction(
+              child: Text(translate('button.cancel'),style: TextStyle(color: Colors.red),),
+              isDefaultAction: true,
+              onPressed: () => Navigator.pop(context, null),
+            ),
+          ),
+        )
     );
   }
 }
