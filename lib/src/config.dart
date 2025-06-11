@@ -1,6 +1,3 @@
-// lib/src/config.dart
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 
 const String _env = String.fromEnvironment('ENV', defaultValue: 'prod');
@@ -31,6 +28,30 @@ class Config {
     return 'assets/i18n/prod/';
   }
 
+  /// URL SEO pour chaque environnement
+  static String get mainPageLinkTagCanonical {
+    if (isDev)     return 'https://template-test-dev.web.app/';
+    if (isStaging) return 'https://template-test-staging.web.app/';
+    return 'https://template-test-prod-d8d6b.web.app/';
+  }
+
+  static String get mainPageLinkTagAlternateEN {
+    // English version
+    return '${mainPageLinkTagCanonical}en/';
+  }
+
+  static String get mainPageLinkTagAlternateFR {
+    // French version
+    return '${mainPageLinkTagCanonical}fr/';
+  }
+
+  static String get mainPageLinkTagAlternateDefault => mainPageLinkTagCanonical;
+
+  /// Profils sociaux
+  static String get youtubeLink   => 'https://www.youtube.com/votreChannel';
+  static String get instagramLink => 'https://www.instagram.com/votreCompte';
+  static String get tiktokLink    => 'https://www.tiktok.com/@votreCompte';
+
   // --- 2) API / Services ---
   static String get apiBaseUrl {
     if (isDev)     return 'https://api-dev.mon-exemple.com/';
@@ -59,4 +80,6 @@ class Config {
     }
     return 'https://storage.googleapis.com/\$firebaseBucket/temp/guide_prod.pdf';
   }
+
+
 }

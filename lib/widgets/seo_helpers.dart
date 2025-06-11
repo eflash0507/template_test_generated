@@ -2,7 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/widgets.dart';
 import 'package:seo/seo.dart';
 
-/// SeoHead : injecte vos <meta> et <link> dans le <head>, puis affiche `child`.
+/// SeoHead : injecte vos <meta> et <link> dans le head, puis affiche `child`.
 class SeoHead extends StatelessWidget {
   final List<HeadTag> tags;  // MetaTag, LinkTag…
   final Widget child;

@@ -2,45 +2,31 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
-import 'package:seo/head_tag.dart';
-import 'package:seo/html/seo_controller.dart';
-import 'package:seo/html/seo_widget.dart';
-import 'package:seo/html/tree/widget_tree.dart';
 import 'package:seo/seo.dart';
 import 'package:template_test_generated/src/config.dart';
 import 'package:flutter_translate/flutter_translate.dart';
-import 'package:template_test_generated/src/variables.dart';
+import 'package:template_test_generated/src/functions.dart';
+import 'package:template_test_generated/src/seo_datas.dart';
 import 'package:template_test_generated/widgets/seo_helpers.dart';
-import 'package:web/web.dart' as web;
-
-String detectLocale() {
-  // Récupère la langue depuis l'API navigateur interop
-  final String navLang = web.window.navigator.language;
-  final String code = navLang.split('-').first.toLowerCase();
-
-  // Définit les locales supportées
-  const supported = ['en', 'fr'];
-  return supported.contains(code) ? code : 'en';
-}
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // récupère la langue passée via --dart-define=LOCALE
+  // recuperate la language passe via --dart-define=LOCALE
   /// const String localeEnv = String.fromEnvironment('LOCALE', defaultValue: 'en');
   final localeEnv = detectLocale();
-  print("env local langue IS >>> $localeEnv");
+  printf("env local language IS >>> $localeEnv");
   var delegate = await LocalizationDelegate.create(
-    fallbackLocale: 'en',
+    fallbackLocale: localeEnv,
     supportedLocales: ['en', 'fr'],
     basePath: Config.i18nBasePath,  // <- ici, on passe Config.i18nBasePath
   );
-  usePathUrlStrategy();  // permet à Google de voir chaque route comme une page distincte
+  usePathUrlStrategy();  // permit à Google de voir chaque route comme une page distincte
   runApp(LocalizedApp(delegate, MyApp(locale: localeEnv)));
 }
 
 class MyApp extends StatelessWidget {
   final String locale;
-  const MyApp({Key? key, required this.locale}) : super(key: key);
+  const MyApp({super.key, required this.locale});
 
   // This widget is the root of your application.
   @override
@@ -50,53 +36,9 @@ class MyApp extends StatelessWidget {
       enabled: true,                                 // désactivez si user loggé, testé, etc.
       tree: WidgetTree(context: context),            // parcours du widget tree
       child:SeoHead(
-        tags: [
-          // 1. Métadatas HTML de base
-          MetaTag(name: 'charset',  content: 'UTF-8'),
-          MetaTag(name: 'viewport', content: 'width=device-width, initial-scale=1'),
-          MetaTag(name: 'robots',   content: 'index, follow'),
-
-          // 2. Titre et description
-          MetaTag(name: 'title',       content: appTitleForCtrSERP),
-          MetaTag(name: 'description', content: metaDescription),
-
-          // 3. Canonical & hreflang
-          LinkTag(rel: 'canonical', href: mainPageLinkTagCanonical),
-          LinkTag(rel: 'alternate', hreflang: 'en', href: mainPageLinkTagAlternateFR),
-          LinkTag(rel: 'alternate', hreflang: 'fr', href: mainPageLinkTagAlternateEN),
-          LinkTag(rel: 'alternate', hreflang: 'x-default', href: mainPageLinkTagAlternateDefault),
-          /**
-          // 4. Open Graph NOT WORKING NEED SERVERLESS
-          MetaTag(name: 'og:type',        content: 'website'),
-          MetaTag(name: 'og:title',       content: appTitleForCtrSERP),
-          MetaTag(name: 'og:description', content: metaDescription),
-          MetaTag(name: 'og:url',         content: ogUrl),
-          MetaTag(name: 'og:image',       content: ogImg),
-
-          // 5. Twitter Cards NOT WORKING NEED SERVERLESS
-          MetaTag(name: 'twitter:card',        content: 'summary_large_image'),
-          MetaTag(name: 'twitter:title',       content: titre),
-          MetaTag(name: 'twitter:description', content: description),
-          MetaTag(name: 'twitter:image',       content: imageUrl),
-          **/
-        ],
-        child: Seo.html(/// JSON-LD Organization
-          html: '''
-            <title>$appTitleForCtrSERP</title>
-            <script type="application/ld+json">
-            {
-              "@context":"https://schema.org",
-              "@type":"Organization",
-              "url":"$mainPageLinkTagAlternateDefault",
-              "name":"$appTitleForCtrSERP",
-              "sameAs":[
-                "$youtubeLink",
-                "$instagram",
-                "$tiktok"
-              ]
-            }
-            </script>
-            ''',
+        tags: seoHead,
+        child: SeoHtml(
+          html: jsonLdOrganization,
           child: MaterialApp(
               localizationsDelegates: [
                 GlobalMaterialLocalizations.delegate,
@@ -117,14 +59,8 @@ class MyApp extends StatelessWidget {
               },
               title: translate('seo_test.appTitleForCtrSERP')
           ),
-        ),
-
-
-
+        )
       ),
-
-
-
     );
   }
 }
@@ -237,17 +173,27 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  void showDemoActionSheet(
-      {required BuildContext context, required Widget child}) {
-    showCupertinoModalPopup<String>(
-        context: context,
-        builder: (BuildContext context) => child).then((String? value) {
-      if (value != null) changeLocale(context, value);
-    });
+  Future<void> actionSheet({
+    required BuildContext context,
+    required Widget child,
+  }) async {
+    // Lance action sheet et attends le result
+    final String? value = await showCupertinoModalPopup<String>(
+      context: context,
+      builder: (_) => child,
+    );
+
+    // Si, entre-temps, ce State n'est plus monté, on sort
+    if (!context.mounted) return;
+
+    // Si l'utilisateur a choisi une langue, on la change
+    if (value != null) {
+      changeLocale(context, value);
+    }
   }
 
   void _onActionSheetPress(BuildContext context) {
-    showDemoActionSheet(
+    actionSheet(
         context: context,
         child: Container(
           color: Colors.transparent,/// Theme.of(context).textTheme.titleLarge?.color,
@@ -271,9 +217,9 @@ class _MyHomePageState extends State<MyHomePage> {
               )
             ],
             cancelButton: CupertinoActionSheetAction(
-              child: Text(translate('button.cancel'),style: TextStyle(color: Colors.red),),
               isDefaultAction: true,
               onPressed: () => Navigator.pop(context, null),
+              child: Text(translate('button.cancel'),style: TextStyle(color: Colors.red),),
             ),
           ),
         )

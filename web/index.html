@@ -5,9 +5,35 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- Title & Description NOT NEEDED > MANAGED BY DART FILE
-  <title>FLUTTER WEB APP MULTI LANG</title>
-  <meta name="description" content="FLUTTER WEB APP MULTI LANG & FULL SEO DESCRIPTION"> -->
+  <!-- Lottie Web player -->
+  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+  <link rel="preload" href="main.dart.js" as="script">
+  <link rel="preload" href="assets/splash.json" as="fetch">
+  <!--
+    #lottie-fullscreen {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw;            /* 100% viewport width */
+    height: 100vh;           /* 100% viewport height */
+    margin: 0;
+    padding: 0;
+    background: #ffffff;     /* ou transparent si overlay */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    }
+
+    #lottie-fullscreen lottie-player {
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    max-height: none;
+    }
+  -->
+    <!-- Title & Description NOT NEEDED > MANAGED BY DART FILE
+    <title>FLUTTER WEB APP MULTI LANG</title>
+    <meta name="description" content="FLUTTER WEB APP MULTI LANG & FULL SEO DESCRIPTION"> -->
 
   <!-- Canonical & Hreflang NOT NEEDED > MANAGED BY DART FILE
   <link rel="canonical" href="https://template-test-prod-d8d6b.web.app/">
@@ -41,20 +67,47 @@
     }
   </script>-->
 
-  <!-- iOS meta tags & icons -->
+  <!-- iOS meta tags & icons
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="MonApp">
-  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+  <meta name="apple-mobile-web-app-title" content="MonApp">-->
+  <link rel="apple-touch-icon" sizes="192x192" href="icons/Icon-192.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="icons/Icon-180.png">
+  <link rel="apple-touch-icon" sizes="167x167" href="icons/Icon-167.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="icons/Icon-152.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="icons/Icon-120.png">
 
   <!-- Favicon & manifest -->
   <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="icon" type="image/x-icon" href="favicon.ico" />
   <link rel="manifest" href="manifest.json">
+  
+  <!-- Pin to start Windows-->
+  <meta name="msapplication-config" content="/browserconfig.xml" />
+
 </head>
 <body>
 <!-- Flutter Web entrypoint
 <script src="main.dart.js" type="application/javascript"></script>-->
-<!-- Flutter Web bootstrap -->
+
+<div id="lottie-fullscreen">
+  <lottie-player
+          src="assets/splash.json"
+          background="transparent"
+          speed="1"
+          loop
+          autoplay
+          data-preserve-aspect-ratio="xMidYMid slice">
+  </lottie-player>
+</div>
+
 <script src="flutter_bootstrap.js" defer></script>
+<script>
+  window.addEventListener('flutter-first-frame', () => {
+    const splash = document.getElementById('lottie-fullscreen');
+    if (splash) splash.remove();
+  });
+</script>
+
 </body>
 </html>
