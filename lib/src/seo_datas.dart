@@ -5,7 +5,7 @@ import 'config.dart';
 List<HeadTag> seoHead = [
   // Métadatas HTML de base
   MetaTag(name: 'charset',  content: 'UTF-8'),
-  MetaTag(name: 'viewport', content: 'width=device-width, initial-scale=1'),
+  MetaTag(name: 'viewport', content: 'width=device-width, initial-scale=5'),
   MetaTag(name: 'robots',   content: 'index, follow'),
 
   // Titre et description
