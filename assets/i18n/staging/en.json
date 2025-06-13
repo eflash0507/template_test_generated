@@ -5,7 +5,7 @@
 		"description": "Discover a fully multilingual Flutter Web template, SEO-optimized, ultra-fast and PWA-ready with Firebase deployment for top search rankings."
 	},
 
-	"app_bar":
+	"app_bar": 
 	{
 		"title": "[DEV]Menu",
 		"home": "[DEV]Accueil",

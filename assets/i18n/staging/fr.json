@@ -5,16 +5,16 @@
 		"description": "Découvrez ce template Flutter Web multilingue, optimisé SEO, ultra-rapide et PWA-ready, avec déploiement facile sur Firebase pour un référencement optimal."
 	},
 
-	"app_bar":
+	"app_bar": 
 	{
-		"title": "[PROD]MenuFR",
-		"home": "[PROD]Accueil",
-		"about": "[PROD]À propos",
-		"contact": "[PROD]Contact",
-		"news": "[PROD]Marché",
-		"research": "[PROD]Solution",
-		"ecom": "[PROD]Boutique",
-		"devices": "[PROD]Equipements"
+		"title": "Menu",
+		"home": "Accueil",
+		"about": "À propos",
+		"contact": "Contact",
+		"news": "Marché",
+		"research": "Solution",
+		"ecom": "Boutique",
+		"devices": "Equipements"
 	},
 
 	"unknown_page": {
