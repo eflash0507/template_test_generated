@@ -65,6 +65,7 @@ flutter:
   # the material Icons class.
   uses-material-design: true
   assets:
+    - assets/splash.json
     - assets/i18n/dev/fr.json
     - assets/i18n/dev/en.json
     - assets/i18n/staging/fr.json
