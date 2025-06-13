@@ -4,29 +4,30 @@
   <!-- Charset & Viewport
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">-->
-
-  <style>
-    /* Spinner CSS centrée full-screen */
-    #css-loader {
-      position: fixed; top: 0; left: 0;
-      width: 100%; height: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: #fff;
-      z-index: 9999;
-    }
-    .spinner {
-      width: 60px; height: 60px;
-      border: 6px solid #e0e0e0;
-      border-top-color: #2196F3;
-      border-radius: 50%;
-      animation: spin 1s linear infinite;             /* MDN: @keyframes animation  */
-    }
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-  </style>
+  <!-- Spinner
+    <style>
+      /* Spinner CSS centrée full-screen */
+      #css-loader {
+        position: fixed; top: 0; left: 0;
+        width: 100%; height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #fff;
+        z-index: 9999;
+      }
+      .spinner {
+        width: 60px; height: 60px;
+        border: 6px solid #e0e0e0;
+        border-top-color: #2196F3;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;             /* MDN: @keyframes animation  */
+      }
+      @keyframes spin {
+        to { transform: rotate(360deg); }
+      }
+    </style>
+    -->
   <!--
     #lottie-fullscreen {
     position: fixed;
@@ -49,15 +50,31 @@
     max-height: none;
     }
   -->
-    <!-- Title & Description NOT NEEDED > MANAGED BY DART FILE
-    <title>FLUTTER WEB APP MULTI LANG</title>
-    <meta name="description" content="FLUTTER WEB APP MULTI LANG & FULL SEO DESCRIPTION"> -->
+  <!-- Preload du bundle principal Flutter pour réduire le Time to First Byte (TTFB)
+         et accélérer le First Contentful Paint (FCP) turn0search3 -->
+  <link rel="preload"
+        href="main.dart.js"
+        as="script"
+        crossorigin="anonymous">
 
-  <!-- Canonical & Hreflang NOT NEEDED > MANAGED BY DART FILE
-  <link rel="canonical" href="https://template-test-prod-d8d6b.web.app/">
-  <link rel="alternate" hreflang="en" href="https://template-test-prod-d8d6b.web.app/en/">
-  <link rel="alternate" hreflang="fr" href="https://template-test-prod-d8d6b.web.app/fr/">
-  <link rel="alternate" hreflang="x-default" href="https://template-test-prod-d8d6b.web.app/"> -->
+  <!-- Loader full-screen Lottie -->
+  <style>
+    #lottie-fullscreen {
+      position: fixed; top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      display: flex; justify-content: center; align-items: center;
+      background: #ffffff;
+      margin: 0; padding: 0;
+      z-index: 9999;
+    }
+    #lottie-fullscreen lottie-player {
+      width: 100%; height: 100%;
+      max-width: none; max-height: none;
+    }
+  </style>
+  <!-- Lottie Web player (récente version utilise fetch, pas XHR) turn0search5 -->
+  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"
+          crossorigin="anonymous"></script>
 
   <!-- Open Graph -->
   <meta property="og:type"        content="website">
@@ -105,13 +122,31 @@
 
 </head>
 <body>
-<!-- Loader statique -->
+<!-- Loader statique of spinner
 <div id="css-loader">
   <div class="spinner"></div>
 </div>
+-->
 
+<div id="lottie-fullscreen">
+  <lottie-player
+          src="assets/splash.json"
+          background="transparent"
+          speed="1"
+          loop
+          autoplay
+          data-preserve-aspect-ratio="xMidYMid slice">
+  </lottie-player>
+</div>
+<script>
+  // Supprime le splash dès que Flutter émet son premier frame
+  window.addEventListener('flutter-first-frame', () => {
+    document.getElementById('lottie-fullscreen')?.remove();
+  }); // Ce listener garantit qu’on n’utilise plus de XHR.responseText turn0search8
+</script>
 <!-- Flutter Web bootstrap -->
 <script src="flutter_bootstrap.js" defer></script>
+<!--
 <script>
   // Dès que Flutter émet le premier frame, on supprime le loader
   window.addEventListener('flutter-first-frame', () => {
@@ -119,6 +154,6 @@
     if (loader) loader.remove();
   });
 </script>
-
+-->
 </body>
 </html>
