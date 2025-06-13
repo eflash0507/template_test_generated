@@ -29,7 +29,7 @@
       }
     </style>-->
 
-  <!-- 3. Styles pour le conteneur full-screen Lottie -->
+  <!--conteneur full-screen Lottie -->
   <style>
     #splash-container {
       position: fixed;
@@ -86,14 +86,14 @@
   <div class="spinner"></div>
 </div>
 -->
-<!-- 4. Conteneur pour l’animation Lottie -->
+<!-- Conteneur animation Lottie -->
 <div id="splash-container"></div>
 
-<!-- 5. Chargement de lottie-web (Bodymovin) -->
+<!-- lottie-web (Bodymovin) -->
 <script src="https://unpkg.com/lottie-web@5.9.4/build/player/lottie.min.js"
-        crossorigin="anonymous"></script>                            <!-- turn3search0 -->
+        crossorigin="anonymous"></script>
 
-<!-- 6. Instanciation et suppression du splash -->
+<!-- Instanciation  suppression du splash -->
 <script>
   // Charge l’animation en SVG, loop, autoplay
   const container = document.getElementById('splash-container');
@@ -114,17 +114,17 @@
     container.remove();
   });
 </script>
+
+<script>
+  // S’il existe, on supprime Intl.v8BreakIterator pour forcer Segmenter
+  if (typeof Intl.Segmenter === 'function') {
+    Intl.v8BreakIterator = undefined;
+  }
+</script>
+
+
 <script src="flutter_bootstrap.js"
         defer
         crossorigin="anonymous"></script>
-<!--
-<script>
-  // Dès que Flutter émet le premier frame, on supprime le loader
-  window.addEventListener('flutter-first-frame', () => {
-    const loader = document.getElementById('css-loader');
-    if (loader) loader.remove();
-  });
-</script>
--->
 </body>
 </html>

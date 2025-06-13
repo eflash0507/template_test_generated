@@ -15,5 +15,35 @@
 		"research": "[PROD]Solution",
 		"ecom": "[PROD]Boutique",
 		"devices": "[PROD]Equipements"
+	},
+
+	"unknown_page": {
+		"title" : "Unknown page"
+	},
+
+	"language":
+	{
+		"name":
+		{
+			"en": "English",
+			"es": "Spanish",
+			"fr": "French",
+			"ar": "Arabic",
+			"ru": "Russian",
+			"pl": "Polish",
+			"zh": "Chinese",
+			"ja": "Japanese"
+		},
+		"selected_message": "Currently selected language is {language}",
+		"selection":
+		{
+			"message": "Please select a language from the list",
+			"title": "Language Selection"
+		}
+	},
+	"language_button":
+	{
+		"cancel": "Cancel",
+		"change_language": "Change Language"
 	}
 }

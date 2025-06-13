@@ -14,6 +14,6 @@ String detectLocale() {
 
 printf(msg) {
   if (kDebugMode) {
-    print("env local langue IS >>> $msg");
+    print(msg);
   }
 }

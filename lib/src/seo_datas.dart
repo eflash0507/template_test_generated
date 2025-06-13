@@ -1,6 +1,5 @@
 import 'package:seo/seo.dart';
 import 'package:template_test_generated/src/variables.dart';
-
 import 'config.dart';
 
 List<HeadTag> seoHead = [

@@ -7,13 +7,43 @@
 
 	"app_bar": 
 	{
-		"title": "[DEV]Menu",
-		"home": "[DEV]Accueil",
-		"about": "[DEV]À propos",
-		"contact": "[DEV]Contact",
-		"news": "[DEV]Marché",
-		"research": "[DEV]Solution",
-		"ecom": "[DEV]Boutique",
-		"devices": "[DEV]Equipements"
+		"title": "Menu",
+		"home": "Accueil",
+		"about": "À propos",
+		"contact": "Contact",
+		"news": "Marché",
+		"research": "Solution",
+		"ecom": "Boutique",
+		"devices": "Equipements"
+	},
+
+	"unknown_page": {
+		"title" : "Page non trouvée"
+	},
+
+	"language":
+	{
+		"name":
+		{
+			"en": "Anglais",
+			"es": "Espagnol",
+			"fr": "Français",
+			"ar": "Arabe",
+			"ru": "Russe",
+			"pl": "Polonais",
+			"zh": "Chinois",
+			"ja": "Japonais"
+		},
+		"selected_message": "La langue actuellement sélectionnée est {language}",
+		"selection":
+		{
+			"message": "Veuillez sélectionner une langue dans la liste",
+			"title": "Sélection de la langue"
+		}
+	},
+	"language_button":
+	{
+		"cancel": "Annuler",
+		"change_language": "Changer de langue"
 	}
 }

@@ -1,13 +1,49 @@
 {
-	"app_bar": 
+	"seo_test": {
+		"lang": "ENGLISH",
+		"appTitleForCtrSERP": "Flutter Web Multilingual & SEO-Optimized Ultra-Fast Template",
+		"description": "Discover a fully multilingual Flutter Web template, SEO-optimized, ultra-fast and PWA-ready with Firebase deployment for top search rankings."
+	},
+
+	"app_bar":
 	{
-		"title": "[PILOT]Menu",
-		"home": "[PILOT]Accueil",
-		"about": "[PILOT]À propos",
-		"contact": "[PILOT]Contact",
-		"news": "[PILOT]Marché",
-		"research": "[PILOT]Solution",
-		"ecom": "[PILOT]Boutique",
-		"devices": "[PILOT]Equipements"
+		"title": "[DEV]Menu",
+		"home": "[DEV]Accueil",
+		"about": "[DEV]À propos",
+		"contact": "[DEV]Contact",
+		"news": "[DEV]Marché",
+		"research": "[DEV]Solution",
+		"ecom": "[DEV]Boutique",
+		"devices": "[DEV]Equipements"
+	},
+
+	"unknown_page": {
+		"title" : "Unknown page"
+	},
+
+	"language":
+	{
+		"name":
+		{
+			"en": "English",
+			"es": "Spanish",
+			"fr": "French",
+			"ar": "Arabic",
+			"ru": "Russian",
+			"pl": "Polish",
+			"zh": "Chinese",
+			"ja": "Japanese"
+		},
+		"selected_message": "Currently selected language is {language}",
+		"selection":
+		{
+			"message": "Please select a language from the list",
+			"title": "Language Selection"
+		}
+	},
+	"language_button":
+	{
+		"cancel": "Cancel",
+		"change_language": "Change Language"
 	}
 }
