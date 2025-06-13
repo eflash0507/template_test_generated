@@ -40,7 +40,6 @@ List<HeadTag> seoHead = [
 ];
 
 final String jsonLdOrganization = '''
-            <title>$appTitleForCtrSERP</title>
             <script type="application/ld+json">
             {
               "@context":"https://schema.org",

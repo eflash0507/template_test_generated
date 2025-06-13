@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <base href="$FLUTTER_BASE_HREF">
   <!-- Charset & Viewport
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">-->
@@ -27,26 +26,30 @@
       @keyframes spin {
         to { transform: rotate(360deg); }
       }
-    </style>-->
+    </style>
+-->
+  <!--
+    #lottie-fullscreen {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw;            /* 100% viewport width */
+    height: 100vh;           /* 100% viewport height */
+    margin: 0;
+    padding: 0;
+    background: #ffffff;     /* ou transparent si overlay */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    }
 
-  <!-- 3. Styles pour le conteneur full-screen Lottie -->
-  <style>
-    #splash-container {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100vw; height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin: 0; padding: 0;
-      background: #ffffff;
-      z-index: 9999;
+    #lottie-fullscreen lottie-player {
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    max-height: none;
     }
-    /* Lottie rend en SVG, donc 100% cover */
-    #splash-container svg {
-      width: 100%; height: 100%;
-    }
-  </style>
+  -->
 
 
   <!-- Open Graph -->
@@ -57,9 +60,23 @@
   <meta property="og:image"       content="https://template-test-prod-d8d6b.web.app/test.png/"/>
 
   <!-- PWA Manifest & Theme Color -->
-  <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#ffffff">
+  <link rel="manifest" href="manifest.json"/>
+  <meta name="theme-color" content="#ffffff"/>
 
+  <!-- Fallback JSON-LD Organization
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "url": "https://template-test-prod-d8d6b.web.app/",
+      "name": "FLUTTER WEB APP MULTI LANG & FULL SEO",
+      "sameAs": [
+        "https://www.youtube.com/",
+        "https://www.instagram.com/",
+        "https://www.tiktok.com/"
+      ]
+    }
+  </script>-->
 
   <!-- iOS meta tags & icons
   <meta name="mobile-web-app-capable" content="yes">
@@ -74,7 +91,7 @@
   <!-- Favicon & manifest -->
   <link rel="icon" type="image/png" href="favicon.png" />
   <link rel="icon" type="image/x-icon" href="favicon.ico" />
-  <link rel="manifest" href="manifest.json">
+  <link rel="manifest" href="manifest.json"/>
   
   <!-- Pin to start Windows-->
   <meta name="msapplication-config" content="/browserconfig.xml" />
@@ -84,36 +101,9 @@
 <!-- Loader statique of spinner
 <div id="css-loader">
   <div class="spinner"></div>
-</div>
--->
-<!-- 4. Conteneur pour l’animation Lottie -->
-<div id="splash-container"></div>
+</div>-->
 
-<!-- 5. Chargement de lottie-web (Bodymovin) -->
-<script src="https://unpkg.com/lottie-web@5.9.4/build/player/lottie.min.js"
-        crossorigin="anonymous"></script>                            <!-- turn3search0 -->
 
-<!-- 6. Instanciation et suppression du splash -->
-<script>
-  // Charge l’animation en SVG, loop, autoplay
-  const container = document.getElementById('splash-container');
-  const animation = lottie.loadAnimation({
-    container,
-    renderer: 'svg',
-    loop: true,
-    autoplay: true,
-    path: 'assets/splash.json',
-    rendererSettings: {
-      preserveAspectRatio: 'xMidYMid slice'                      // mode cover
-    }
-  });
-
-  // Dès que Flutter affiche son premier frame, on retire le splash
-  window.addEventListener('flutter-first-frame', () => {
-    animation.destroy();
-    container.remove();
-  });
-</script>
 <script src="flutter_bootstrap.js"
         defer
         crossorigin="anonymous"></script>
@@ -124,7 +114,7 @@
     const loader = document.getElementById('css-loader');
     if (loader) loader.remove();
   });
-</script>
--->
+</script>-->
+
 </body>
 </html>

@@ -20,8 +20,11 @@ void main() async {
     supportedLocales: ['en', 'fr'],
     basePath: Config.i18nBasePath,  // <- ici, on passe Config.i18nBasePath
   );
+  printf("env local language IS >>> $localeEnv");
   usePathUrlStrategy();  // permit à Google de voir chaque route comme une page distincte
+  printf("env local language IS >>> $localeEnv");
   runApp(LocalizedApp(delegate, MyApp(locale: localeEnv)));
+  printf("env local language IS >>> $localeEnv");
 }
 
 class MyApp extends StatelessWidget {
