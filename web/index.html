@@ -60,19 +60,10 @@
   <!-- Loader full-screen Lottie -->
   <style>
     #splash-container {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100vw; height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin: 0; padding: 0;
-      background: #ffffff;
-      z-index: 9999;
-    }
-    /* Lottie rend en SVG, donc 100% cover */
-    #splash-container svg {
-      width: 100%; height: 100%;
+      position: fixed; top:0; left:0;
+      width:100vw; height:100vh;
+      display:flex; align-items:center; justify-content:center;
+      background:#fff; z-index:9999;
     }
   </style>
 
@@ -128,30 +119,34 @@
   <div class="spinner"></div>
 </div>
 -->
-<!-- 4. Conteneur pour l’animation Lottie -->
 <div id="splash-container"></div>
 
-<!-- 5. Chargement de lottie-web (Bodymovin) -->
-<script src="https://unpkg.com/lottie-web@5.9.4/build/player/lottie.min.js"
+<!-- lottie-web via fetch, évite XHR.responseText -->
+<script src="https://unpkg.com/lottie-web@5/build/player/lottie.min.js"
         crossorigin="anonymous"></script>
-<!-- 6. Instanciation et suppression du splash -->
 <script>
-  // Charge l’animation en SVG, loop, autoplay
   const container = document.getElementById('splash-container');
-  const animation = lottie.loadAnimation({
-    container,
-    renderer: 'svg',
-    loop: true,
-    autoplay: true,
-    path: 'assets/splash.json',
-    rendererSettings: {
-      preserveAspectRatio: 'xMidYMid slice'                      // mode cover
-    }
-  });
 
-  // Dès que Flutter affiche son premier frame, on retire le splash
-  window.addEventListener('flutter-first-frame', () => {
-    animation.destroy();
+  // Fetch le JSON (response.json utilise responseType='' puis JSON.parse)
+  fetch('assets/splash.json')                                 // :contentReference[oaicite:5]{index=5}
+    .then(res => res.json())                                   // :contentReference[oaicite:6]{index=6}
+    .then(data => {
+      // Charge l’animation en passant directamente animationData
+      lottie.loadAnimation({
+        container,
+        renderer: 'svg',
+        loop: true,
+        autoplay: true,
+        animationData: data,
+        rendererSettings: {
+          preserveAspectRatio: 'xMidYMid slice'
+        }
+      });
+    })
+    .catch(console.error);
+
+  // Dès le premier frame Flutter, on retire le splash
+  window.addEventListener('flutter-first-frame', () => {      // :contentReference[oaicite:7]{index=7}
     container.remove();
   });
 </script>
